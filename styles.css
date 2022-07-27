@@ -31,6 +31,7 @@ svg {
 
 .container {
   max-width: 80%;
+  height: 80%;
   margin: 0 auto;
 }
 
@@ -70,11 +71,13 @@ svg {
 }
 
 .nav__link {
+  width: 200px;
   margin-left: 25px;
-  padding: 8px 70px;
+  padding: 8px 20px;
   border: 2px solid #3d3e40;
   border-radius: 6px;
   display: inline-block;
+  text-align: center;
   font-weight: 700;
   font-style: 18px;
 }
@@ -94,7 +97,7 @@ svg {
   padding-top: 30px;
   padding-bottom: 45px;
   display: grid;
-  grid-template-columns: 3fr 2fr 2fr 1fr 2fr;
+  grid-template-columns: 3fr 2fr 2fr 1fr;
   grid-column-gap: 20px;
 }
 
@@ -114,6 +117,7 @@ svg {
   padding: 9px 25px;
   border: 2px solid transparent;
   border-radius: 6px;
+  font-family: inherit;
 }
 
 .form__input:focus-visible {
@@ -123,6 +127,16 @@ svg {
 
 .form__label {
   margin-bottom: 10px;
+}
+
+.result {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.result__cards {
+  flex-grow: 1;
 }
 
 .result__title {
@@ -194,29 +208,122 @@ svg {
 }
 
 .pagination {
-	display: flex;
-	justify-content: flex-end;
-
+  display: flex;
+  justify-content: flex-end;
 }
 
 .pagination__button {
-	padding: 3px 10px;
-	border: 1px solid transparent;
-	border-radius: 6px;
-	background-color: transparent;
-	font: inherit;
-	cursor: pointer;
-	transition: all 200ms;
+  padding: 3px 10px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background-color: transparent;
+  font: inherit;
+  cursor: pointer;
+  transition: all 200ms;
 }
 
 .pagination__button:hover {
-	border-color: #3d3e40;
+  border-color: #3d3e40;
 }
 
 .pagination__current {
-	margin: 0 20px;
-	padding: 3px 25px;
-	border-radius: 6px;
-	line-height: 26px;
-	background-color: #fff;
+  margin: 0 20px;
+  padding: 3px 25px;
+  border-radius: 6px;
+  line-height: 26px;
+  background-color: #fff;
+}
+
+@media screen and (max-width: 900px) {
+  .nav__link {
+    width: 150px;
+  }
+
+  .form__input {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .form {
+    grid-template-columns: 6fr 3fr 2fr 1fr;
+  }
+
+  .card__title {
+    margin-top: 10px;
+    font-size: 23px;
+  }
+
+  .card__link {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 670px) {
+  .header__inner {
+    align-items: center;
+  }
+
+  .main {
+    margin-top: 144px;
+  }
+
+  .nav {
+    text-align: right;
+  }
+  .nav__link {
+    margin: 5px 0 5px 20px;
+  }
+
+  .form {
+    grid-template-rows: 70px 60px 60px;
+    grid-row-gap: 20px;
+  }
+
+  .form__control_users {
+    grid-column-start: 1;
+    grid-column-end: 6;
+  }
+
+  .form__control_per-pages {
+    grid-column-start: 3;
+    grid-column-end: 6;
+  }
+
+  .card {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card__avatar {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+    flex-basis: 100px;
+  }
+
+  .card__info {
+    margin-left: 0;
+    text-align: center;
+  }
+
+  .card__title {
+    font-size: 26px;
+  }
+
+  .card__link {
+    margin-top: 20px;
+    flex-basis: 40px;
+    align-self: center;
+  }
+}
+
+@media screen and (max-width: 440px) {
+  .form {
+    padding-bottom: 30px;
+    grid-template-rows: 60px 60px;
+  }
+
+  .form__title {
+    display: none;
+  }
 }

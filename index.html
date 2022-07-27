@@ -23,7 +23,7 @@
       <div class="container">
         <form class="form">
           <h1 class="form__title title">Search for Github users</h1>
-          <div class="form__control">
+          <div class="form__control form__control_users">
             <label class="form__label">Users</label>
             <input required id="username" type="text" class="form__input" />
           </div>
@@ -39,14 +39,14 @@
               <option value="asc">Asc</option>
             </select>
           </div>
-          <div class="form__control">
+          <div class="form__control form__control_per-pages">
             <label class="form__label">Per page</label>
             <input value="5" id="perPage" type="text" class="form__input" />
           </div>
         </form>
         <section class="result">
           <h2 class="result__title title">Results</h2>
-          <div id="results"></div>
+          <div class="result__cards" id="results"></div>
           <div class="pagination">
             <button id="prev" class="pagination__button">← prev</button>
             <span id="current" class="pagination__current">1</span>
