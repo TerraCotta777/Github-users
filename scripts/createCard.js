@@ -1,4 +1,5 @@
-export const createCard = (id, avatar, name, url, getRepos, someFunc) => {
+export const createCardUser = (id, avatar, name, url, getRepos, someFunc) => {
+  name = name.length > 24 ? name.substr(0, 24) + "..." : name;
   const card = document.createElement("div");
   card.classList.add("result__card", "card");
   card.setAttribute("id", id);
