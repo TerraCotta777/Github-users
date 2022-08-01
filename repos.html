@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Github API | Repositories</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="page repositories">
+    <custom-header></custom-header>
+    <main class="main">
+      <div class="container">
+        <h1 class="repositories__title title">User Info</h1>
+        <section class="result">
+          <h2 class="result__title title">Repositories</h2>
+          <div class="result__cards" id="results"></div>
+        </section>
+      </div>
+    </main>
+
+    <script type="module" src="./scripts/getRepos.js"></script>
+  </body>
+</html>

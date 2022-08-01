@@ -8,17 +8,7 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body class="page">
-    <header class="header">
-      <div class="container">
-        <div class="header__inner">
-          <a class="header__logo" href="/">Github users</a>
-          <nav class="nav">
-            <a class="nav__link nav__link_black" href="#">Search</a>
-            <a class="nav__link" href="#">Favorites</a>
-          </nav>
-        </div>
-      </div>
-    </header>
+    <custom-header></custom-header>
     <main class="main">
       <div class="container">
         <form class="form">
@@ -30,13 +20,16 @@
           <div class="form__control">
             <label class="form__label">Sort</label>
             <select class="form__input" name="sort" id="sort">
-              <option value="created">created</option>
+              <option value="followers">followers</option>
+              <option value="repositories">repositories</option>
+              <option value="repositories">joined</option>
             </select>
           </div>
           <div class="form__control">
             <label class="form__label">Order</label>
             <select class="form__input" name="order" id="order">
               <option value="asc">Asc</option>
+              <option value="desc">Desc</option>
             </select>
           </div>
           <div class="form__control form__control_per-pages">

@@ -1,60 +1,91 @@
-import { createCard } from "./createCard.js";
+import "./customHeader.js";
+import { createCardUser } from "./createCard.js";
+import { getRepos } from "./getRepos.js";
+import { addToFaves } from "./faves.js";
 
 const userName = document.querySelector("#username");
+const sort = document.querySelector("#sort");
 const perPage = document.querySelector("#perPage");
-// const formSearch = document.querySelector("#form");
 const results = document.querySelector("#results");
 const prevButton = document.querySelector("#prev");
 const nextButton = document.querySelector("#next");
 const currentPage = document.querySelector("#current");
-let currentPageValue = +currentPage.textContent;
+const url = "https://api.github.com/search/";
+let currentPageValue;
 let maxPages = 1;
 
-userName.addEventListener("keyup", getUsers);
-nextButton.addEventListener("click", getUsers);
-prevButton.addEventListener("click", getUsers);
-
-function queryString(user, perPage, event) {
-  const url = "https://api.github.com/search/users";
-  if (event.target.id === "next" && currentPageValue < maxPages) {
-    currentPageValue += 1;
-  } else if (event.target.id === "prev") currentPageValue -= 1;
-  let queryString = `${url}?q=${user}&per_page=${perPage}&page=${currentPageValue}`;
-  currentPage.textContent = currentPageValue;
-  return queryString;
+if (userName) {
+  currentPageValue = +currentPage.textContent;
+  let maxPages = 1;
+  userName.addEventListener("keyup", debounce(getUsers, 500));
+  nextButton.addEventListener("click", nextPage);
+  prevButton.addEventListener("click", prevPage);
 }
 
+export const faves = localStorage.getItem("faves")
+  ? JSON.parse(localStorage.getItem("faves"))
+  : localStorage.setItem("faves", JSON.stringify({}));
+
+// ================== PAGINATION ==================
+
+function nextPage() {
+  if (currentPageValue < maxPages) currentPageValue += 1;
+  else currentPageValue = 1;
+  currentPage.textContent = currentPageValue;
+  getUsers();
+}
+
+function prevPage() {
+  if (currentPageValue > 1) currentPageValue -= 1;
+  else currentPageValue = maxPages;
+  currentPage.textContent = currentPageValue;
+  getUsers();
+}
+
+// ================== SEARCH USERS ==================
+
 async function getUsers(e) {
-  clear();
-  const response = await fetch(queryString(userName.value, perPage.value, e));
+  clear(results);
+  let queryString = `${url}users?q=${userName.value}&per_page=${perPage.value}&page=${currentPageValue}&sort=${sort.value}&order=desc`;
+  const response = await fetch(queryString);
   if (response.ok) {
     const result = await response.json();
-    maxPages = +response.headers
-      .get("link")
-      .split("&page=")[2]
-      .replace(/[^0-9]/g, "");
+    let totalItems = result.total_count > 999 ? 999 : result.total_count;
+    maxPages = Math.ceil(totalItems / perPage.value);
     result.items.forEach((user) => {
-      const card = createCard(
+      const card = createCardUser(
         user.id,
         user.avatar_url,
         user.login,
         user.html_url,
         getRepos,
-        someFunc
+        addToFaves
       );
       results.appendChild(card);
     });
   }
 }
 
-async function getRepos() {
-  console.log("getRepos");
+// ================== DELAY FUNCTION ==================
+
+function debounce(func, wait, immediate) {
+  let timeout;
+  return function () {
+    const context = this,
+      args = arguments;
+    const later = function () {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+    const callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(context, args);
+  };
 }
 
-function someFunc() {
-  console.log("isfave");
-}
+// ================== CLEARING RESULTS ==================
 
-function clear() {
-  while (results.firstChild) results.removeChild(results.firstChild);
+export function clear(container) {
+  while (container.firstChild) container.removeChild(container.firstChild);
 }
