@@ -217,9 +217,11 @@ svg {
   margin: 26%;
 }
 
-.card__is-fav:hover svg path {
+.card__is-fav:hover svg path,
+.card__is-fav.true svg path {
   fill: #3d3e40;
 }
+
 
 .pagination {
   display: flex;
@@ -330,7 +332,7 @@ svg {
     align-self: center;
   }
 
-	.repositories__card button {
+	.repositories__card .button {
 		margin-top: 30px;
 	}
 }
