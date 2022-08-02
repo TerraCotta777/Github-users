@@ -6,6 +6,12 @@ import { addToFaves } from "./faves.js";
 
 const resultDiv = document.querySelector(".repositories #results");
 
+
+const currentUser = localStorage.getItem("currentUser")
+  ? JSON.parse(localStorage.getItem("currentUser"))
+  : localStorage.setItem("currentUser", JSON.stringify(0));
+
+	
 export async function getRepos(e) {
   const id = e.currentTarget.offsetParent.id;
   localStorage.setItem("currentUser", JSON.stringify(id));

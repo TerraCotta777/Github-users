@@ -1,6 +1,7 @@
 import "./customHeader.js";
 import { createCardUser } from "./createCard.js";
 import { getRepos } from "./getRepos.js";
+import { faves } from "./faves.js";
 import { addToFaves } from "./faves.js";
 
 const userName = document.querySelector("#username");
@@ -26,10 +27,6 @@ if (userName) {
   nextButton.addEventListener("click", nextPage);
   prevButton.addEventListener("click", prevPage);
 }
-
-export const faves = localStorage.getItem("faves")
-  ? JSON.parse(localStorage.getItem("faves"))
-  : localStorage.setItem("faves", JSON.stringify({}));
 
 // ================== PAGINATION ==================
 
