@@ -28,8 +28,8 @@
           <div class="form__control">
             <label class="form__label">Order</label>
             <select class="form__input" name="order" id="order">
-              <option value="asc">Asc</option>
-              <option value="desc">Desc</option>
+              <option value="asc">asc</option>
+              <option value="desc">desc</option>
             </select>
           </div>
           <div class="form__control form__control_per-pages">
@@ -39,7 +39,9 @@
         </form>
         <section class="result">
           <h2 class="result__title title">Results</h2>
-          <div class="result__cards" id="results"></div>
+          <div class="result__cards" id="results">
+						<div id="loader"></div>
+					</div>
           <div class="pagination">
             <button id="prev" class="pagination__button">← prev</button>
             <span id="current" class="pagination__current">1</span>

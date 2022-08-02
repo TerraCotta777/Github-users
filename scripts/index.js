@@ -5,6 +5,7 @@ import { addToFaves } from "./faves.js";
 
 const userName = document.querySelector("#username");
 const sort = document.querySelector("#sort");
+const order = document.querySelector("#order");
 const perPage = document.querySelector("#perPage");
 const results = document.querySelector("#results");
 const prevButton = document.querySelector("#prev");
@@ -15,6 +16,10 @@ let currentPageValue;
 let maxPages = 1;
 
 if (userName) {
+  perPage.addEventListener("keyup", debounce(getUsers, 700));
+  sort.addEventListener("change", getUsers);
+  order.addEventListener("change", getUsers);
+
   currentPageValue = +currentPage.textContent;
   let maxPages = 1;
   userName.addEventListener("keyup", debounce(getUsers, 500));
@@ -45,13 +50,14 @@ function prevPage() {
 // ================== SEARCH USERS ==================
 
 async function getUsers(e) {
-  clear(results);
-  let queryString = `${url}users?q=${userName.value}&per_page=${perPage.value}&page=${currentPageValue}&sort=${sort.value}&order=desc`;
+  results.innerHTML = `<div class="loader"></div>`;
+  let queryString = `${url}users?q=${userName.value}&per_page=${perPage.value}&page=${currentPageValue}&sort=${sort.value}&order=${order.value}`;
   const response = await fetch(queryString);
   if (response.ok) {
     const result = await response.json();
     let totalItems = result.total_count > 999 ? 999 : result.total_count;
     maxPages = Math.ceil(totalItems / perPage.value);
+    clear(results);
     result.items.forEach((user) => {
       const card = createCardUser(
         user.id,
