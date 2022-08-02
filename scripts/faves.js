@@ -1,10 +1,13 @@
 import { customHeader } from "./customHeader.js";
 import { createCardUser } from "./createCard.js";
-import { faves } from "./index.js";
 import { getRepos } from "./getRepos.js";
 import { clear } from "./index.js";
 
 const resultDiv = document.querySelector(".faves #results");
+
+export const faves = localStorage.getItem("faves")
+  ? JSON.parse(localStorage.getItem("faves"))
+  : localStorage.setItem("faves", JSON.stringify({}));
 
 // ================== FAVORITES FUNCTION ==================
 
@@ -20,6 +23,7 @@ export function addToFaves(e) {
   };
 
   if (e.currentTarget.classList.contains("true")) {
+    console.log(faves);
     faves[obj.id] = user;
   } else {
     delete faves[obj.id];
