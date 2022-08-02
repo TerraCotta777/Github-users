@@ -50,36 +50,38 @@ function prevPage() {
 // ================== SEARCH USERS ==================
 
 async function getUsers(e) {
-  results.innerHTML = `<div class="loader"></div>`;
-  let queryString = `${url}users?q=${userName.value}&per_page=${perPage.value}&page=${currentPageValue}&sort=${sort.value}&order=${order.value}`;
-  try {
-    const response = await fetch(queryString);
-    if (response.ok) {
-      const result = await response.json();
-      if (result.total_count > 0) {
-        let totalItems = result.total_count > 999 ? 999 : result.total_count;
-        maxPages = Math.ceil(totalItems / perPage.value);
-        clear(results);
-        result.items.forEach((user) => {
-          const card = createCardUser(
-            user.id,
-            user.avatar_url,
-            user.login,
-            user.html_url,
-            getRepos,
-            addToFaves
-          );
-          results.appendChild(card);
-        });
-      } else if (result.total_count === 0) {
-        results.innerHTML = `<p style="margin-top: 30px">User with this name wasn't found.</p>`;
+  if (userName.value) {
+    results.innerHTML = `<div class="loader"></div>`;
+    let queryString = `${url}users?q=${userName.value}&per_page=${perPage.value}&page=${currentPageValue}&sort=${sort.value}&order=${order.value}`;
+    try {
+      const response = await fetch(queryString);
+      if (response.ok) {
+        const result = await response.json();
+        if (result.total_count > 0) {
+          let totalItems = result.total_count > 999 ? 999 : result.total_count;
+          maxPages = Math.ceil(totalItems / perPage.value);
+          clear(results);
+          result.items.forEach((user) => {
+            const card = createCardUser(
+              user.id,
+              user.avatar_url,
+              user.login,
+              user.html_url,
+              getRepos,
+              addToFaves
+            );
+            results.appendChild(card);
+          });
+        } else if (result.total_count === 0) {
+          results.innerHTML = `<p style="margin-top: 30px">User with this name wasn't found.</p>`;
+        }
+      } else {
+        results.innerHTML = `<p style="margin-top: 30px">Error occurred. Error code - ${response.status}</p>`;
       }
-    } else {
-			results.innerHTML =`<p style="margin-top: 30px">Error occurred. Error code - ${response.status}</p>`;
-		}
-  } catch (e) {
-    console.log(e);
-    results.innerHTML = e.message;
+    } catch (e) {
+      console.log(e);
+      results.innerHTML = `<p style="margin-top: 30px">${e.message}</p>`;
+    }
   }
 }
 

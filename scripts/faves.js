@@ -32,6 +32,8 @@ export function addToFaves(e) {
   }
 }
 
+// ================== FAVORITES DISPLAY ==================
+
 window.onload = () => {
   displayFaves = () => {
     clear(resultDiv);
