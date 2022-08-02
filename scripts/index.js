@@ -5,6 +5,7 @@ import { addToFaves } from "./faves.js";
 
 const userName = document.querySelector("#username");
 const sort = document.querySelector("#sort");
+const order = document.querySelector("#order");
 const perPage = document.querySelector("#perPage");
 const results = document.querySelector("#results");
 const prevButton = document.querySelector("#prev");
@@ -15,6 +16,10 @@ let currentPageValue;
 let maxPages = 1;
 
 if (userName) {
+  perPage.addEventListener("keyup", debounce(getUsers, 700));
+  sort.addEventListener("change", getUsers);
+  order.addEventListener("change", getUsers);
+
   currentPageValue = +currentPage.textContent;
   let maxPages = 1;
   userName.addEventListener("keyup", debounce(getUsers, 500));
@@ -45,24 +50,36 @@ function prevPage() {
 // ================== SEARCH USERS ==================
 
 async function getUsers(e) {
-  clear(results);
-  let queryString = `${url}users?q=${userName.value}&per_page=${perPage.value}&page=${currentPageValue}&sort=${sort.value}&order=desc`;
-  const response = await fetch(queryString);
-  if (response.ok) {
-    const result = await response.json();
-    let totalItems = result.total_count > 999 ? 999 : result.total_count;
-    maxPages = Math.ceil(totalItems / perPage.value);
-    result.items.forEach((user) => {
-      const card = createCardUser(
-        user.id,
-        user.avatar_url,
-        user.login,
-        user.html_url,
-        getRepos,
-        addToFaves
-      );
-      results.appendChild(card);
-    });
+  results.innerHTML = `<div class="loader"></div>`;
+  let queryString = `${url}users?q=${userName.value}&per_page=${perPage.value}&page=${currentPageValue}&sort=${sort.value}&order=${order.value}`;
+  try {
+    const response = await fetch(queryString);
+    if (response.ok) {
+      const result = await response.json();
+      if (result.total_count > 0) {
+        let totalItems = result.total_count > 999 ? 999 : result.total_count;
+        maxPages = Math.ceil(totalItems / perPage.value);
+        clear(results);
+        result.items.forEach((user) => {
+          const card = createCardUser(
+            user.id,
+            user.avatar_url,
+            user.login,
+            user.html_url,
+            getRepos,
+            addToFaves
+          );
+          results.appendChild(card);
+        });
+      } else if (result.total_count === 0) {
+        results.innerHTML = `<p style="margin-top: 30px">User with this name wasn't found.</p>`;
+      }
+    } else {
+			results.innerHTML =`<p style="margin-top: 30px">Error occurred. Error code - ${response.status}</p>`;
+		}
+  } catch (e) {
+    console.log(e);
+    results.innerHTML = e.message;
   }
 }
 

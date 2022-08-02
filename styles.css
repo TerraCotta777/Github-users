@@ -30,7 +30,7 @@ svg {
 }
 
 .container {
-	max-width: 1200px;
+  max-width: 1200px;
   width: 80%;
   height: 80%;
   margin: 0 auto;
@@ -91,14 +91,14 @@ svg {
 .main {
   flex-grow: 1;
   margin-top: 81px;
-	padding-bottom: 30px;
+  padding-bottom: 30px;
   background-color: #e8e8e9;
 }
 
 .repositories__title,
 .faves__title {
-	padding-top: 30px;
-	font-size: 30px;
+  padding-top: 30px;
+  font-size: 30px;
 }
 
 .form {
@@ -139,7 +139,7 @@ svg {
 
 .result {
   height: 90%;
-	padding-bottom: 30px;
+  padding-bottom: 30px;
   display: flex;
   flex-direction: column;
 }
@@ -162,8 +162,8 @@ svg {
 }
 
 .repositories__card {
-	display: flex;
-	justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .card__avatar {
@@ -222,7 +222,6 @@ svg {
   fill: #3d3e40;
 }
 
-
 .pagination {
   display: flex;
   justify-content: flex-end;
@@ -248,6 +247,25 @@ svg {
   border-radius: 6px;
   line-height: 26px;
   background-color: #fff;
+}
+
+.loader {
+  width: 120px;
+  height: 120px;
+	margin: 100px auto;
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid #3d3e40;
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @media screen and (max-width: 900px) {
@@ -332,9 +350,9 @@ svg {
     align-self: center;
   }
 
-	.repositories__card .button {
-		margin-top: 30px;
-	}
+  .repositories__card .button {
+    margin-top: 30px;
+  }
 }
 
 @media screen and (max-width: 440px) {
