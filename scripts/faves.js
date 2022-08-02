@@ -5,9 +5,11 @@ import { clear } from "./index.js";
 
 const resultDiv = document.querySelector(".faves #results");
 
-export const faves = localStorage.getItem("faves")
+let faves = localStorage.getItem("faves")
   ? JSON.parse(localStorage.getItem("faves"))
   : localStorage.setItem("faves", JSON.stringify({}));
+
+faves = JSON.parse(localStorage.getItem("faves"));
 
 // ================== FAVORITES FUNCTION ==================
 

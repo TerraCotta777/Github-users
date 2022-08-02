@@ -1,7 +1,7 @@
 import "./customHeader.js";
 import { createCardUser } from "./createCard.js";
 import { getRepos } from "./getRepos.js";
-import { faves } from "./faves.js";
+// import { faves } from "./faves.js";
 import { addToFaves } from "./faves.js";
 
 const userName = document.querySelector("#username");
